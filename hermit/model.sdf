@@ -55,62 +55,62 @@
 
 		<!-- adicao de imu -->
       	<sensor name="imu_sensor" type="imu">
-        <always_on>1</always_on>
-        <update_rate>250</update_rate>
-        <imu>
-          <angular_velocity>
-            <x>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00018665</stddev>
-                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-              </noise>
-            </x>
-            <y>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00018665</stddev>
-                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-              </noise>
-            </y>
-            <z>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00018665</stddev>
-                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-              </noise>
-            </z>
-          </angular_velocity>
-          <linear_acceleration>
-            <x>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00186</stddev>
-                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-              </noise>
-            </x>
-            <y>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00186</stddev>
-                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-              </noise>
-            </y>
-            <z>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00186</stddev>
-                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-              </noise>
-            </z>
-          </linear_acceleration>
-        </imu>
+        	<always_on>1</always_on>
+        	<update_rate>250</update_rate>
+        	<imu>
+				<angular_velocity>
+					<x>
+						<noise type="gaussian">
+							<mean>0</mean>
+							<stddev>0.00018665</stddev>
+							<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+							<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+						</noise>
+					</x>
+					<y>
+						<noise type="gaussian">
+							<mean>0</mean>
+							<stddev>0.00018665</stddev>
+							<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+							<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+						</noise>
+					</y>
+					<z>
+						<noise type="gaussian">
+							<mean>0</mean>
+							<stddev>0.00018665</stddev>
+							<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+							<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+						</noise>
+					</z>
+				</angular_velocity>
+				<linear_acceleration>
+					<x>
+						<noise type="gaussian">
+							<mean>0</mean>
+							<stddev>0.00186</stddev>
+							<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+							<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+						</noise>
+					</x>
+					<y>
+						<noise type="gaussian">
+							<mean>0</mean>
+							<stddev>0.00186</stddev>
+							<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+							<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+						</noise>
+					</y>
+					<z>
+						<noise type="gaussian">
+							<mean>0</mean>
+							<stddev>0.00186</stddev>
+							<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+							<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+						</noise>
+					</z>
+				</linear_acceleration>
+        	</imu>
       	</sensor>
 
 		<!-- acho que eh o gps -->
@@ -119,25 +119,116 @@
         	<update_rate>30</update_rate>
       	</sensor>
 
-		<!-- adicao da realsense -->
-		<sensor name="realsense_t265" type="camera">
-        	<pose>0.137 0 0 0 0 0</pose> <!-- Distância de 137mm na direção x -->
-        	<camera>
-          		<horizontal_fov>1.047</horizontal_fov>
-          			<image>
-            			<width>848</width>
-            			<height>800</height>
-            			<format>R8G8B8</format>
-          			</image>
-          			<clip>
-            			<near>0.1</near>
-            			<far>10.0</far>
-          			</clip>
-        	</camera>
-        	<plugin name="realsense_plugin" filename="librealsense_plugin.so">
-          		<topicName>/camera/realsense_t265</topicName>
-        	</plugin>
-      	</sensor>
+		<!-- Adicionando o sensor da câmera diretamente ao base_link -->
+      	<!-- Camera 1 -->
+      <sensor name="t265_fisheye1_camera" type="camera">
+        <pose>0.137 0.042 0 0 0 0</pose>
+        <camera>
+          <horizontal_fov>3.14</horizontal_fov> <!-- Ajuste do FOV para simular grande angular -->
+          <image>
+            <width>800</width>
+            <height>848</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007419134024530649</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <topic>t265/fisheye1/image_raw</topic>
+      </sensor>
+
+      <!-- Camera 2 -->
+      <sensor name="t265_fisheye2_camera" type="camera">
+        <pose>0.137 -0.022 0 0 0 0</pose>
+        <camera>
+          <horizontal_fov>3.14</horizontal_fov> <!-- Ajuste do FOV para simular grande angular -->
+          <image>
+            <width>800</width>
+            <height>848</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007419134024530649</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <topic>t265/fisheye2/image_raw</topic>
+      </sensor>
+
+      <!-- Inertial Measurement Unit (IMU) -->
+		<sensor name="t265_imu_sensor" type="imu">
+			<pose>0.137 0 0 0 0 0</pose>
+			<always_on>1</always_on>
+			<update_rate>250</update_rate>
+			<imu>
+			<angular_velocity>
+				<x>
+					<noise type="gaussian">
+						<mean>0</mean>
+						<stddev>0.00018665</stddev>
+						<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+						<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+					</noise>
+				</x>
+				<y>
+					<noise type="gaussian">
+						<mean>0</mean>
+						<stddev>0.00018665</stddev>
+						<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+						<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+					</noise>
+				</y>
+				<z>
+					<noise type="gaussian">
+						<mean>0</mean>
+						<stddev>0.00018665</stddev>
+						<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+						<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+					</noise>
+				</z>
+			</angular_velocity>
+			<linear_acceleration>
+				<x>
+					<noise type="gaussian">
+						<mean>0</mean>
+						<stddev>0.00186</stddev>
+						<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+						<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+					</noise>
+				</x>
+				<y>
+					<noise type="gaussian">
+						<mean>0</mean>
+						<stddev>0.00186</stddev>
+						<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+						<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+					</noise>
+				</y>
+				<z>
+					<noise type="gaussian">
+						<mean>0</mean>
+						<stddev>0.00186</stddev>
+						<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+						<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+					</noise>
+				</z>
+			</linear_acceleration>
+		</imu>
+		<topic>t265/imu/data</topic>
+		</sensor>
 
 		</link>
 		<link name="rotor_0">
