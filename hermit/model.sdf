@@ -1,25 +1,25 @@
 <?xml version="1.0" ?>
-<sdf version="1.9">
+<sdf version="1.6">
 	<model name="hermit">
 		<link name="base_link">
 			<self_collide>false</self_collide>
-			<pose>0.040679756029127934 -0.00034873458530025153 0.012013977777892704 0.0 -0.0 0.0</pose>
+			<pose>-0.001559042498879469 -0.00012705778028637992 -0.03001362292917375 0.0 -0.0 0.0</pose>
 			<inertial>
 				<pose>0.0 0.0 0.0 0 0 0</pose>
-				<mass>0.8973223858951238</mass>
+				<mass>1.9351014774256954</mass>
 				<inertia>
-					<ixx>0.007894864708576962</ixx>
-					<ixy>2.9742032594364454e-05</ixy>
-					<ixz>0.0010373968108894317</ixz>
-					<iyy>0.01051945710375701</iyy>
-					<iyz>-1.1126624077404405e-05</iyz>
-					<izz>0.011390812014671969</izz>
+					<ixx>0.010003826998556216</ixx>
+					<ixy>1.8055243573532933e-06</ixy>
+					<ixz>4.321980401955412e-05</ixz>
+					<iyy>0.012023955778993926</iyy>
+					<iyz>4.7346027188299e-05</iyz>
+					<izz>0.011437588209398155</izz>
 				</inertia>
 			</inertial>
 			<collision name="base_link_collision">
 				<geometry>
 					<mesh>
-						<uri>model://hermit/meshes/CAD/base.stl</uri>
+						<uri>model://hermit/meshes/CAD/base_link.stl</uri>
 						<scale>0.001 0.001 0.001</scale>
 					</mesh>
 				</geometry>
@@ -27,7 +27,7 @@
 			<visual name="base_link_visual">
 				<geometry>
 					<mesh>
-						<uri>model://hermit/meshes/CAD/base.stl</uri>
+						<uri>model://hermit/meshes/CAD/base_link.stl</uri>
 						<scale>0.001 0.001 0.001</scale>
 					</mesh>
 				</geometry>
@@ -39,211 +39,100 @@
         		</material>
 			</visual>
 
-		<!-- sensor de pressao -->
-		<sensor name="air_pressure_sensor" type="air_pressure">
-        	<always_on>1</always_on>
-        	<update_rate>50</update_rate>
-        	<air_pressure>
-          	<pressure>
-            	<noise type="gaussian">
-              		<mean>0</mean>
-              		<stddev>0.01</stddev>
-            	</noise>
-          	</pressure>
-        	</air_pressure>
-      	</sensor>
 
-		<!-- adicao de imu -->
-      	<sensor name="imu_sensor" type="imu">
-        	<always_on>1</always_on>
-        	<update_rate>250</update_rate>
-        	<imu>
-				<angular_velocity>
-					<x>
-						<noise type="gaussian">
-							<mean>0</mean>
-							<stddev>0.00018665</stddev>
-							<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-							<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-						</noise>
-					</x>
-					<y>
-						<noise type="gaussian">
-							<mean>0</mean>
-							<stddev>0.00018665</stddev>
-							<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-							<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-						</noise>
-					</y>
-					<z>
-						<noise type="gaussian">
-							<mean>0</mean>
-							<stddev>0.00018665</stddev>
-							<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-							<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-						</noise>
-					</z>
-				</angular_velocity>
-				<linear_acceleration>
-					<x>
-						<noise type="gaussian">
-							<mean>0</mean>
-							<stddev>0.00186</stddev>
-							<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-							<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-						</noise>
-					</x>
-					<y>
-						<noise type="gaussian">
-							<mean>0</mean>
-							<stddev>0.00186</stddev>
-							<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-							<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-						</noise>
-					</y>
-					<z>
-						<noise type="gaussian">
-							<mean>0</mean>
-							<stddev>0.00186</stddev>
-							<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-							<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-						</noise>
-					</z>
-				</linear_acceleration>
-        	</imu>
-      	</sensor>
-
-		<!-- acho que eh o gps -->
-      	<sensor name="navsat_sensor" type="navsat">
-	  		<always_on>1</always_on>
-        	<update_rate>30</update_rate>
-      	</sensor>
-
-		<!-- Adicionando o sensor da câmera diretamente ao base_link -->
-      	<!-- Camera 1 -->
-      <sensor name="t265_fisheye1_camera" type="camera">
-        <pose>0.137 0.042 0 0 0 0</pose>
-        <camera>
-          <horizontal_fov>3.14</horizontal_fov> <!-- Ajuste do FOV para simular grande angular -->
-          <image>
-            <width>800</width>
-            <height>848</height>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007419134024530649</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <topic>t265/fisheye1/image_raw</topic>
-      </sensor>
-
-      <!-- Camera 2 -->
-      <sensor name="t265_fisheye2_camera" type="camera">
-        <pose>0.137 -0.022 0 0 0 0</pose>
-        <camera>
-          <horizontal_fov>3.14</horizontal_fov> <!-- Ajuste do FOV para simular grande angular -->
-          <image>
-            <width>800</width>
-            <height>848</height>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007419134024530649</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <topic>t265/fisheye2/image_raw</topic>
-      </sensor>
-
-      <!-- Inertial Measurement Unit (IMU) -->
-		<sensor name="t265_imu_sensor" type="imu">
-			<pose>0.137 0 0 0 0 0</pose>
-			<always_on>1</always_on>
-			<update_rate>250</update_rate>
-			<imu>
-			<angular_velocity>
-				<x>
+			<!-- sensor de pressao -->
+			<sensor name="air_pressure_sensor" type="air_pressure">
+				<always_on>1</always_on>
+				<update_rate>50</update_rate>
+				<air_pressure>
+				<pressure>
 					<noise type="gaussian">
 						<mean>0</mean>
-						<stddev>0.00018665</stddev>
-						<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-						<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+						<stddev>0.01</stddev>
 					</noise>
-				</x>
-				<y>
-					<noise type="gaussian">
-						<mean>0</mean>
-						<stddev>0.00018665</stddev>
-						<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-						<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-					</noise>
-				</y>
-				<z>
-					<noise type="gaussian">
-						<mean>0</mean>
-						<stddev>0.00018665</stddev>
-						<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
-						<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-					</noise>
-				</z>
-			</angular_velocity>
-			<linear_acceleration>
-				<x>
-					<noise type="gaussian">
-						<mean>0</mean>
-						<stddev>0.00186</stddev>
-						<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-						<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-					</noise>
-				</x>
-				<y>
-					<noise type="gaussian">
-						<mean>0</mean>
-						<stddev>0.00186</stddev>
-						<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-						<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-					</noise>
-				</y>
-				<z>
-					<noise type="gaussian">
-						<mean>0</mean>
-						<stddev>0.00186</stddev>
-						<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
-						<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-					</noise>
-				</z>
-			</linear_acceleration>
-		</imu>
-		<topic>t265/imu/data</topic>
-		</sensor>
+				</pressure>
+				</air_pressure>
+			</sensor>
 
+			<!-- adicao de imu -->
+			<sensor name="imu_sensor" type="imu">
+				<always_on>1</always_on>
+				<update_rate>250</update_rate>
+				<imu>
+					<angular_velocity>
+						<x>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00018665</stddev>
+								<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+							</noise>
+						</x>
+						<y>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00018665</stddev>
+								<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+							</noise>
+						</y>
+						<z>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00018665</stddev>
+								<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+							</noise>
+						</z>
+					</angular_velocity>
+					<linear_acceleration>
+						<x>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00186</stddev>
+								<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+							</noise>
+						</x>
+						<y>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00186</stddev>
+								<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+							</noise>
+						</y>
+						<z>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00186</stddev>
+								<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+							</noise>
+						</z>
+					</linear_acceleration>
+				</imu>
+			</sensor>
+
+			<!-- sensor nav_sat -->
+			<sensor name="navsat_sensor" type="navsat">
+				<always_on>1</always_on>
+				<update_rate>30</update_rate>
+			</sensor>
 		</link>
 		<link name="rotor_0">
 			<self_collide>false</self_collide>
-			<pose>0.1763844207224358 -0.17637943645958287 0.06643381593098678 0.0 -0.0 0.0</pose>
+			<pose>0.17638442072246333 -0.1763900952871535 0.0664338159309642 0.0 -0.0 0.0</pose>
 			<inertial>
 				<pose>0.0 0.0 0.0 0 0 0</pose>
-				<mass>0.012598625423513404</mass>
+				<mass>0.012598625423458859</mass>
 				<inertia>
-					<ixx>3.712134860980383e-05</ixx>
-					<ixy>4.748926037614343e-07</ixy>
-					<ixz>2.3732261111852892e-11</ixz>
-					<iyy>3.7512151732936875e-07</iyy>
-					<iyz>-1.5154273942386e-10</iyz>
-					<izz>3.7315190894922256e-05</izz>
+					<ixx>3.712134860191299e-05</ixx>
+					<ixy>-4.750345084613805e-07</ixy>
+					<ixz>2.3732259979425408e-11</ixz>
+					<iyy>3.7512151779699467e-07</iyy>
+					<iyz>1.0117084061622706e-10</iyz>
+					<izz>3.7315190887038074e-05</izz>
 				</inertia>
 			</inertial>
 			<collision name="rotor_0_collision">
@@ -261,6 +150,7 @@
 						<scale>0.001 0.001 0.001</scale>
 					</mesh>
 				</geometry>
+
 				<material>
 					<ambient>0.694 0.071 0.071 1.0</ambient> <!-- Vermelho (#B21613) -->
 					<diffuse>0.694 0.071 0.071 1.0</diffuse>
@@ -270,17 +160,17 @@
 		</link>
 		<link name="rotor_1">
 			<self_collide>false</self_collide>
-			<pose>-0.17638511122151002 0.1763900954843592 0.06643381593098849 0.0 -0.0 0.0</pose>
+			<pose>-0.1763851112214826 0.17637943665679223 0.06643381593096595 0.0 -0.0 0.0</pose>
 			<inertial>
 				<pose>0.0 0.0 0.0 0 0 0</pose>
-				<mass>0.012598625423513426</mass>
+				<mass>0.012598625423458886</mass>
 				<inertia>
-					<ixx>3.712134860172487e-05</ixx>
-					<ixy>4.748925994601638e-07</ixy>
-					<ixz>-2.6626286420139422e-11</ixz>
-					<iyy>3.751215168064093e-07</iyy>
-					<iyz>-1.0118419315752192e-10</iyz>
-					<izz>3.7315190886320427e-05</izz>
+					<ixx>3.712134860998955e-05</ixx>
+					<ixy>-4.7503450468471265e-07</ixy>
+					<ixz>-2.662628764138475e-11</ixz>
+					<iyy>3.7512151727376876e-07</iyy>
+					<iyz>1.5152938996898514e-10</iyz>
+					<izz>3.731519089459159e-05</izz>
 				</inertia>
 			</inertial>
 			<collision name="rotor_1_collision">
@@ -298,26 +188,27 @@
 						<scale>0.001 0.001 0.001</scale>
 					</mesh>
 				</geometry>
+				
 				<material>
 					<ambient>0.01 0.01 0.01 1.0</ambient> <!-- Preto -->
 					<diffuse>0.01 0.01 0.01 1.0</diffuse>
 					<specular>0.5 0.5 0.5 1.0</specular>
-				</material>				
+				</material>
 			</visual>
 		</link>
 		<link name="rotor_2">
 			<self_collide>false</self_collide>
-			<pose>0.1763900954249781 0.1763851113593142 0.06737752654104254 0.0 -0.0 0.0</pose>
+			<pose>0.1763844207224318 0.1763900954843642 0.06643381593098675 0.0 -0.0 0.0</pose>
 			<inertial>
 				<pose>0.0 0.0 0.0 0 0 0</pose>
-				<mass>0.012598625423458859</mass>
+				<mass>0.012598625423513388</mass>
 				<inertia>
-					<ixx>3.6072330950558396e-07</ixx>
-					<ixy>-4.7490080020669016e-07</ixy>
-					<ixz>2.3322585387397513e-10</ixz>
-					<iyy>3.710694213110557e-05</iyy>
-					<iyz>2.935665961434353e-11</iyz>
-					<izz>3.731519088650366e-05</izz>
+					<ixx>3.712134860171625e-05</ixx>
+					<ixy>4.7502630770672743e-07</ixy>
+					<ixz>2.3732261089648434e-11</ixz>
+					<iyy>3.751215173294575e-07</iyy>
+					<iyz>-1.0118419155880077e-10</iyz>
+					<izz>3.731519088683486e-05</izz>
 				</inertia>
 			</inertial>
 			<collision name="rotor_2_collision">
@@ -335,6 +226,7 @@
 						<scale>0.001 0.001 0.001</scale>
 					</mesh>
 				</geometry>
+
 				<material>
 					<ambient>0.694 0.071 0.071 1.0</ambient> <!-- Vermelho (#B21613) -->
 					<diffuse>0.694 0.071 0.071 1.0</diffuse>
@@ -344,17 +236,17 @@
 		</link>
 		<link name="rotor_3">
 			<self_collide>false</self_collide>
-			<pose>-0.1763794365189619 -0.17638442058463547 0.06737752654104254 0.0 -0.0 0.0</pose>
+			<pose>-0.17638511122150996 -0.17637943645958717 0.06643381593098671 0.0 -0.0 0.0</pose>
 			<inertial>
 				<pose>0.0 0.0 0.0 0 0 0</pose>
-				<mass>0.012598625423458817</mass>
+				<mass>0.012598625423513386</mass>
 				<inertia>
-					<ixx>3.60723310029254e-07</ixx>
-					<ixy>-4.7490080450640627e-07</ixy>
-					<ixz>1.8215195061177525e-10</ixz>
-					<iyy>3.710694213918107e-05</iyy>
-					<iyz>-2.171724495791949e-11</iyz>
-					<izz>3.731519089510291e-05</izz>
+					<ixx>3.712134860979761e-05</ixx>
+					<ixy>4.750263039277947e-07</ixy>
+					<ixz>-2.6626286508957265e-11</ixz>
+					<iyy>3.751215168058764e-07</iyy>
+					<iyz>-1.515427406006964e-10</iyz>
+					<izz>3.731519089439281e-05</izz>
 				</inertia>
 			</inertial>
 			<collision name="rotor_3_collision">
@@ -372,60 +264,60 @@
 						<scale>0.001 0.001 0.001</scale>
 					</mesh>
 				</geometry>
+
 				<material>
 					<ambient>0.01 0.01 0.01 1.0</ambient> <!-- Preto -->
 					<diffuse>0.01 0.01 0.01 1.0</diffuse>
 					<specular>0.5 0.5 0.5 1.0</specular>
 				</material>
-
 			</visual>
 		</link>
 		<joint name="rotor_0_joint" type="revolute">
 			<parent>base_link</parent>
 			<child>rotor_0</child>
-			<pose>3.3020770352720773e-07 -5.314470553265949e-06 -0.005133815930988517 0 0 0</pose>
+			<pose>3.3020767602920387e-07 5.34435701716518e-06 -0.00513381593096594 0 0 0</pose>
 			<axis>
-				<xyz>1.384432270617168e-16 1.206116978163491e-16 1.0</xyz>
+				<xyz>1.3844322706171694e-16 1.2061169781634914e-16 1.0</xyz>
 				<limit>
-          			<lower>-1e+16</lower>
+					<lower>-1e+16</lower>
           			<upper>1e+16</upper>
-        		</limit>
+				</limit>
 			</axis>
 		</joint>
 		<joint name="rotor_1_joint" type="revolute">
 			<parent>base_link</parent>
 			<child>rotor_1</child>
-			<pose>3.6029137369553153e-07 -5.344554222048714e-06 -0.0051338159309885344 0 0 0</pose>
+			<pose>3.6029134623305483e-07 5.314273345078391e-06 -0.005133815930966001 0 0 0</pose>
 			<axis>
-				<xyz>-5.8253243691178e-16 1.2918848272431333e-16 1.0</xyz>
+				<xyz>-5.825324369117803e-16 1.2918848272431365e-16 1.0</xyz>
 				<limit>
-          			<lower>-1e+16</lower>
+					<lower>-1e+16</lower>
           			<upper>1e+16</upper>
-        		</limit>
+				</limit>
 			</axis>
 		</joint>
 		<joint name="rotor_2_joint" type="revolute">
 			<parent>base_link</parent>
 			<child>rotor_2</child>
-			<pose>-5.344494842987047e-06 -3.604291739023324e-07 -0.006077526541044316 0 0 0</pose>
+			<pose>3.302077034916806e-07 -5.344554223860598e-06 -0.0051338159309885344 0 0 0</pose>
 			<axis>
-				<xyz>-2.1775621247105172e-16 4.853879222570782e-16 1.0</xyz>
+				<xyz>-2.1775621247105172e-16 4.853879222570787e-16 1.0</xyz>
 				<limit>
-          			<lower>-1e+16</lower>
+					<lower>-1e+16</lower>
           			<upper>1e+16</upper>
-        		</limit>
+				</limit>
 			</axis>
 		</joint>
 		<joint name="rotor_3_joint" type="revolute">
 			<parent>base_link</parent>
 			<child>rotor_3</child>
-			<pose>-5.314411174239808e-06 -3.3034550384059003e-07 -0.0060775265410443514 0 0 0</pose>
+			<pose>3.602913736244773e-07 -5.314470552164608e-06 -0.005133815930988526 0 0 0</pose>
 			<axis>
-				<xyz>-2.26332997379014e-16 -2.355877417164184e-16 1.0</xyz>
+				<xyz>-2.2633299737901425e-16 -2.355877417164185e-16 1.0</xyz>
 				<limit>
-          			<lower>-1e+16</lower>
+					<lower>-1e+16</lower>
           			<upper>1e+16</upper>
-        		</limit>
+				</limit>
 			</axis>
 		</joint>
 
@@ -493,5 +385,16 @@
 			<rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
 			<motorType>velocity</motorType>
 		</plugin>
+
+		<!-- camera realsense T265 -->
+		<include merge='true'>
+			<uri>model://realsense_t265</uri>
+			<pose>0.1125 0.020 0.013 -1.57 3.14 1.57</pose>
+		</include>
+		<joint name="CameraJoint" type="fixed">
+			<parent>base_link</parent>
+			<child>realsense_t265/base</child>
+			<pose relative_to="base_link">0.100 0.020 0.013 -1.57 3.14 1.57</pose>
+		</joint>
 	</model>
 </sdf>
