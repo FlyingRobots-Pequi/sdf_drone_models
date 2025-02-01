@@ -201,13 +201,16 @@
 
         </link>
 
+      <plugin
+        filename="gz-sim-odometry-publisher-system"
+        name="gz::sim::systems::OdometryPublisher">
+        <dimensions>3</dimensions>
+        <odom_frame>camera/odom</odom_frame>
+        <odom_topic>camera/odom/sample</odom_topic>
+        <tf_topic>camera</tf_topic>
+        <gaussian_noise>0.000001</gaussian_noise>
+        <odom_publish_frequency>100</odom_publish_frequency>
+      </plugin>
 
-        <!-- Odometry Publisher -->
-        <plugin name="gz::sim::systems::OdometryPublisher" filename="gz-sim-odometry-publisher-system">
-            <dimensions>3</dimensions>
-            <gaussian_noise>0.000001</gaussian_noise>
-            <rpy_offset>-1.5708 1.5708 0</rpy_offset>
-            <tf_topic>/camera/odom/sample</tf_topic>
-        </plugin>
     </model>
 </sdf>
