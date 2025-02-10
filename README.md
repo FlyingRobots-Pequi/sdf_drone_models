@@ -7,7 +7,7 @@ O repositorio adiciona 3 modelos:
 
 Cada um adiciona os stickers são descritos pelo seguinte [documento](https://www.nist.gov/system/files/documents/2024/08/19/Fabrication%20Guide%20-%208%20in%20%2820cm%29%20Open%20Lane%20-%20Wood%20Omni%20Stands%20%282020B%29.pdf)
 
-O local contendo todas as instruções está descrito no seguinte [documento](https://www.nist.gov/el/intelligent-systems-division-73500/standard-test-methods-response-robots/aerial-drone-tests/drone.)
+O arquivo contendo todas as instruções para localização está descrito no seguinte [documento]([https://www.nist.gov/el/intelligent-systems-division-73500/standard-test-methods-response-robots/aerial-drone-tests/drone.](https://www.nist.gov/system/files/documents/2024/08/14/Presentation%20-%20Open%2C%20Obstructed%2C%20Confined%20Lanes%20and%20Scenarios%20%282024A%29.pdf))
 
 O arquivo original dos stickers está disponivel no seguinte [documento](https://www.nist.gov/system/files/documents/2024/08/15/Sticker%20Sheets%20-%208%20in%20%2820%20cm%29%20Open%20Lane%20and%20Scenarios%20-%20Omni%20Buckets%20-%20WHITE%20and%20BLACK%20-%208%20in%20Diam%20Stickers%20%28v2020B%20Answer%20Key%29.pdf)
 
