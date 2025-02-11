@@ -21,6 +21,12 @@
           </mesh>
         </geometry>
 
+        <surface>
+          <contact>
+            <collide_bitmask>0</collide_bitmask>
+          </contact>
+        </surface>
+
       </visual>
     </link>
   </model>

@@ -1,0 +1,216 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+    <model name="realsense_t265">
+
+        <link name="realsense_t265/base">
+            <self_collide>false</self_collide>
+            <pose>0.008851994473352736 5.456759275762921e-06 0.0060441513641385685 0.0 -0.0 0.0</pose>
+            <inertial>
+                <pose>0.0 0.0 0.0 0 0 0</pose>
+                <mass>0.07523827760624975</mass>
+                <inertia>
+                    <ixx>4.307759782578426e-06</ixx>
+                    <ixy>3.485554600095884e-09</ixy>
+                    <ixz>-9.081708575278333e-08</ixz>
+                    <iyy>7.206777466977592e-05</iyy>
+                    <iyz>1.177312171218151e-09</iyz>
+                    <izz>7.476239997019313e-05</izz>
+                </inertia>
+            </inertial>
+            <collision name="base_link_collision">
+                <geometry>
+                    <mesh>
+                        <uri>model://realsense_t265/meshes/CAD/base_link.stl</uri>
+                        <scale>0.001 0.001 0.001</scale>
+                    </mesh>
+                </geometry>
+            </collision>
+            <visual name="base_link_visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://realsense_t265/meshes/CAD/base_link.stl</uri>
+                        <scale>0.001 0.001 0.001</scale>
+                    </mesh>
+                </geometry>
+                <material>
+                    <ambient>0.175 0.175 0.175 1.0</ambient>
+                    <diffuse>0.175 0.175 0.175 1.0</diffuse>
+                    <specular>0.175 0.175 0.175 1.0</specular>
+                </material>
+            </visual>
+
+            <!-- Fisheye Camera 1 -->
+            <sensor name="fishEye1" type="wideanglecamera">
+                <pose>0.032 0 0 -1.57 1.57 0</pose>
+                <camera>
+                    <horizontal_fov>3.14</horizontal_fov>
+                    <image>
+                        <width>800</width>
+                        <height>600</height>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                    <lens>
+                        <type>custom</type>
+                        <custom_function>
+                            <c1>1.05</c1>
+                            <c2>4</c2>
+                            <f>1.0</f>
+                            <fun>tan</fun>
+                        </custom_function>
+                        <scale_to_hfov>true</scale_to_hfov>
+                        <cutoff_angle>3.1415</cutoff_angle>
+                        <env_texture_size>512</env_texture_size>
+                        <intrinsics>
+                            <fx>285.5480041503906</fx>
+                            <fy>285.3793029785156</fy>
+                            <cx>416.00531005859375</cx>
+                            <cy>403.38909912109375</cy>
+                        </intrinsics>
+                    </lens>
+                    <distortion>
+                        <k1>-0.007419134024530649</k1>
+                        <k2>0.041209351271390915</k2>
+                        <k3>-0.03811917081475258</k3>
+                        <p1>0.006366158835589886</p1>
+                        <p2>0.0</p2>
+                    </distortion>
+                </camera>
+                <always_on>true</always_on>
+                <update_rate>30</update_rate>
+                <topic>/camera/fisheye1</topic>
+            </sensor>
+
+            <!-- Fisheye Camera 2 -->
+            <sensor name="fishEye2" type="wideanglecamera">
+                <pose>-0.032 0 0 -1.57 1.57 0</pose>
+                <camera>
+                    <horizontal_fov>3.14</horizontal_fov>
+                    <image>
+                        <width>800</width>
+                        <height>600</height>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                    <lens>
+                        <type>custom</type>
+                        <custom_function>
+                            <c1>1.05</c1>
+                            <c2>4</c2>
+                            <f>1.0</f>
+                            <fun>tan</fun>
+                        </custom_function>
+                        <scale_to_hfov>true</scale_to_hfov>
+                        <cutoff_angle>3.1415</cutoff_angle>
+                        <env_texture_size>512</env_texture_size>
+                        <intrinsics>
+                            <fx>285.5480041503906</fx>
+                            <fy>285.3793029785156</fy>
+                            <cx>416.00531005859375</cx>
+                            <cy>403.38909912109375</cy>
+                        </intrinsics>
+                    </lens>
+                    <distortion>
+                        <k1>-0.007419134024530649</k1>
+                        <k2>0.041209351271390915</k2>
+                        <k3>-0.03811917081475258</k3>
+                        <p1>0.006366158835589886</p1>
+                        <p2>0.0</p2>
+                    </distortion>
+                </camera>
+                <always_on>true</always_on>
+                <update_rate>30</update_rate>
+                <topic>/camera/fisheye2</topic>
+            </sensor>
+
+            <!-- Gyroscope Sensor -->
+            <sensor name="gyro_sensor" type="imu">
+                <pose>-0.0022 0 0.00655 0 0 0</pose>
+                <always_on>1</always_on>
+                <update_rate>200</update_rate>
+                <topic>/camera/gyro/sample</topic>
+                <imu>
+                    <angular_velocity>
+                        <x>
+                            <noise type="gaussian">
+                                <mean>0</mean>
+                                <stddev>0.00087266</stddev>
+                                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
+                                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+                            </noise>
+                        </x>
+                        <y>
+                            <noise type="gaussian">
+                                <mean>0</mean>
+                                <stddev>0.00087266</stddev>
+                                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
+                                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+                            </noise>
+                        </y>
+                        <z>
+                            <noise type="gaussian">
+                                <mean>0</mean>
+                                <stddev>0.00087266</stddev>
+                                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
+                                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+                            </noise>
+                        </z>
+                    </angular_velocity>
+                </imu>
+            </sensor>
+
+            <!-- Accelerometer Sensor -->
+            <sensor name="accel_sensor" type="imu">
+                <pose>-0.0022 0 0.00655 0 0 0</pose>
+                <always_on>1</always_on>
+                <update_rate>200</update_rate>
+                <topic>/camera/accel/sample</topic>
+                <imu>
+                    <linear_acceleration>
+                        <x>
+                            <noise type="gaussian">
+                                <mean>0</mean>
+                                <stddev>0.03924</stddev>
+                                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
+                                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+                            </noise>
+                        </x>
+                        <y>
+                            <noise type="gaussian">
+                                <mean>0</mean>
+                                <stddev>0.03924</stddev>
+                                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
+                                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+                            </noise>
+                        </y>
+                        <z>
+                            <noise type="gaussian">
+                                <mean>0</mean>
+                                <stddev>0.03924</stddev>
+                                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
+                                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+                            </noise>
+                        </z>
+                    </linear_acceleration>
+                </imu>
+            </sensor>
+
+        </link>
+
+      <plugin
+        filename="gz-sim-odometry-publisher-system"
+        name="gz::sim::systems::OdometryPublisher">
+        <dimensions>3</dimensions>
+        <odom_frame>camera/odom</odom_frame>
+        <odom_topic>camera/odom/sample</odom_topic>
+        <tf_topic>camera</tf_topic>
+        <gaussian_noise>0.000001</gaussian_noise>
+        <odom_publish_frequency>100</odom_publish_frequency>
+      </plugin>
+
+    </model>
+</sdf>
