@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <model name="bucket_stand_1">
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+
+        <geometry>
+          <mesh>
+            <uri>model://bucket_stand_1/meshes/target_1/target_1.dae</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+
+        <geometry>
+          <mesh>
+            <uri>model://bucket_stand_1/meshes/target_1/target_1.dae</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+
+        <surface>
+          <contact>
+            <collide_bitmask>0</collide_bitmask>
+          </contact>
+        </surface>
+
+      </visual>
+    </link>
+  </model>
+</sdf>
