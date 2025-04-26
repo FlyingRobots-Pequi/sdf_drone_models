@@ -424,13 +424,13 @@
 		<!-- camera realsense D455 -->
 		<include merge="true">
 			<uri>model://realsense_d455</uri>
-			<pose>0.129227 0 -0.0507 0 0 0</pose>
+			<pose>0.129227 0 -0.0507 0 1.57 0</pose>
 		</include>
 
 		<joint name="CameraJointD455" type="fixed">
 			<parent>base_link</parent>
 			<child>realsense_d455/base</child>
-			<pose relative_to="base_link">0.129227 0 0.0507 0 0 0</pose>
+			<pose relative_to="base_link">0.129227 0 0.0507 0 1.57 0</pose>
 		</joint>
 
 	</model>
