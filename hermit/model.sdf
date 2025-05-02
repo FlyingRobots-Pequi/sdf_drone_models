@@ -115,9 +115,36 @@
 			</sensor>
 
 			<!-- sensor nav_sat -->
-			<sensor name="navsat_sensor" type="navsat">
+			<!-- <sensor name="navsat_sensor" type="navsat">
 				<always_on>1</always_on>
 				<update_rate>30</update_rate>
+			</sensor> -->
+
+			<!-- magnetometro -->
+			<!-- nesse caso, o nome do magnetometro deve coincidir com o que foi declarado na linha 224 do GZBridge.cpp. Caso contrario, a px4 nao consegue fazer a ponte do topico do GZ para a PX4 -->
+			<sensor name="magnetometer_sensor" type="magnetometer">
+				<always_on>1</always_on>
+				<update_rate>50</update_rate>
+				<magnetometer>
+				<x>
+					<noise type="gaussian">
+					<mean>0.000000080</mean>
+					<bias_mean>0.000000400</bias_mean>
+					</noise>
+				</x>
+				<y>
+					<noise type="gaussian">
+					<mean>0.000000080</mean>
+					<bias_mean>0.000000400</bias_mean>
+					</noise>
+				</y>
+				<z>
+					<noise type="gaussian">
+					<mean>0.000000080</mean>
+					<bias_mean>0.000000400</bias_mean>
+					</noise>
+				</z>
+				</magnetometer>
 			</sensor>
 		</link>
 		<link name="rotor_0">
