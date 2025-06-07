@@ -1,0 +1,245 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <model name="realsense_d455">
+    <link name="realsense_d455/base">
+			<self_collide>false</self_collide>
+			<pose>-0.012791222615704197 0.0001391368497120376 0.00010148685979292782 0.0 -0.0 0.0</pose>
+			<inertial>
+				<pose>0.0 0.0 0.0 0 0 0</pose>
+				<mass>0.05475582262426487</mass>
+				<inertia>
+					<ixx>6.978115680551715e-05</ixx>
+					<ixy>-6.662151198652698e-08</ixy>
+					<ixz>3.92527271781623e-08</ixz>
+					<iyy>6.244109799861196e-06</iyy>
+					<iyz>3.81249122264303e-08</iyz>
+					<izz>6.869202355985217e-05</izz>
+				</inertia>
+			</inertial>
+			<collision name="base_collision">
+				<geometry>
+					<mesh>
+						<uri>model://realsense_d455/meshes/CAD/base.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+			</collision>
+			<visual name="base_visual">
+				<geometry>
+					<mesh>
+						<uri>model://realsense_d455/meshes/CAD/base.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+			</visual>
+      
+      <!-- Câmera colorida (RGB) -->
+      <sensor name="color_camera_sensor" type="camera">
+        <pose>0 0.0475 0 0 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <!-- Publicar no tópico /camera/color/image_raw -->
+        <topic>/camera/color/image_raw</topic>
+        <camera>
+          <horizontal_fov>1.39626</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10.0</far>
+          </clip>
+        </camera>
+      </sensor>
+      
+      <!-- Câmera de profundidade (float32) -->
+      <!-- <sensor name="depth_camera_sensor" type="depth_camera">
+        <pose>0 0.010 0 0 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <topic>/camera/depth/image_rect_raw</topic>
+        <camera>
+          <horizontal_fov>1.39626</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>R_FLOAT32</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10.0</far>
+          </clip>
+        </camera>
+      </sensor>
+       -->
+      
+     <sensor name="Realsense-D435" type="rgbd_camera">
+      <pose>0.129227 0 0.0507 0 0 0</pose>
+        <update_rate>60</update_rate>
+        <camera name="camera">
+          <horizontal_fov>1.0472</horizontal_fov>
+          <lens>
+            <intrinsics>
+              <!-- fx = fy = width / ( 2 * tan (hfov / 2 ) ) -->
+              <fx>554.25469</fx>
+              <fy>554.25469</fy>
+              <!-- cx = ( width + 1 ) / 2 -->
+              <cx>320.5</cx>
+              <!-- cy = ( height + 1 ) / 2 -->
+              <cy>240.5</cy>
+              <s>0</s>
+            </intrinsics>
+          </lens>
+          <distortion>
+            <k1>0.0</k1>
+            <k2>0.0</k2>
+            <k3>0.0</k3>
+            <p1>0.0</p1>
+            <p2>0.0</p2>
+            <center>0.5 0.5</center>
+          </distortion>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>300</far>
+          </clip>
+          <depth_camera>
+            <clip>
+              <near>0.1</near>
+              <far>10</far>
+            </clip>
+          </depth_camera>
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <topic>realsense____</topic>
+      </sensor>
+
+      <!-- Câmera IR1 pseudo-colorida (depth_camera) -->
+      <sensor name="infra1_camera_sensor" type="depth_camera">
+        <pose>0 -0.0115 0 0 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <!-- Publicar no tópico /camera/infra1/image_rect_raw -->
+        <topic>/camera/infra1/image_rect_raw</topic>
+        <camera>
+          <horizontal_fov>1.39626</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>R_FLOAT32</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10.0</far>
+          </clip>
+          <!-- Ativa visualização pseudo-color no Gazebo -->
+          <visualize>true</visualize>
+        </camera>
+      </sensor>
+      
+      <!-- Câmera IR2 monocromática (L8) -->
+      <sensor name="infra2_camera_sensor" type="camera">
+        <pose>0 -0.0475 0 0 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <!-- Publicar no tópico /camera/infra2/image_rect_raw -->
+        <topic>/camera/infra2/image_rect_raw</topic>
+        <camera>
+          <horizontal_fov>1.39626</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10.0</far>
+          </clip>
+        </camera>
+      </sensor>
+      
+      <!-- Giroscópio -->
+      <sensor name="gyro_sensor" type="imu">
+        <pose>-9.98 0.01728 7.4 0 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>200</update_rate>
+        <topic>/camera/gyro/sample</topic>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00087266</stddev>
+                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00087266</stddev>
+                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00087266</stddev>
+                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </angular_velocity>
+        </imu>
+      </sensor>
+
+      <!-- Acelerômetro -->
+      <sensor name="accel_sensor" type="imu">
+        <pose>-9.98 0.01728 7.4 0 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>200</update_rate>
+        <topic>/camera/accel/sample</topic>
+        <imu>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.03924</stddev>
+                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.03924</stddev>
+                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.03924</stddev>
+                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+      
+    </link>
+  </model>
+</sdf>

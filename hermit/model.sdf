@@ -447,5 +447,18 @@
 			<child>realsense_t265/base</child>
 			<pose relative_to="base_link">0.100 0.020 0.013 -1.57 3.14 1.57</pose>
 		</joint>
+
+		<!-- camera realsense D455 -->
+		<include merge="true">
+			<uri>model://realsense_d455</uri>
+			<pose>0.129227 0 -0.0507 0 1.57 0</pose>
+		</include>
+
+		<joint name="CameraJointD455" type="fixed">
+			<parent>base_link</parent>
+			<child>realsense_d455/base</child>
+			<pose relative_to="base_link">0.129227 0 0.0507 0 1.57 0</pose>
+		</joint>
+		
 	</model>
 </sdf>
