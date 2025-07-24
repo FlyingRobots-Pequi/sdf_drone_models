@@ -1,0 +1,433 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+	<model name="silver">
+		<link name="base_link">
+			<self_collide>false</self_collide>
+			<pose>0.0006075156828544103 -2.9985573029338134e-05 -0.024853794956219116 0.0 -0.0 0.0</pose>
+			<inertial>
+				<pose>0.0 0.0 0.0 0 0 0</pose>
+				<mass>1.1700623864821842</mass>
+				<inertia>
+					<ixx>0.014493974704811117</ixx>
+					<ixy>2.2363932975208746e-05</ixy>
+					<ixz>-8.841557259964898e-05</ixz>
+					<iyy>0.014895204142477306</iyy>
+					<iyz>1.8555411697785533e-06</iyz>
+					<izz>0.02410811315570954</izz>
+				</inertia>
+			</inertial>
+			<collision name="base_link_collision">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/base_link.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+			</collision>
+			<visual name="base_link_visual">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/base_link.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+
+				<material> <!-- DarkGrey-->
+          			<ambient>0.175 0.175 0.175 1.0</ambient>
+          			<diffuse>0.175 0.175 0.175 1.0</diffuse>
+          			<specular>0.175 0.175 0.175 1.0</specular>
+        		</material>
+			</visual>
+
+			<!-- sensor de pressao -->
+			<sensor name="air_pressure_sensor" type="air_pressure">
+				<always_on>1</always_on>
+				<update_rate>50</update_rate>
+				<air_pressure>
+				<pressure>
+					<noise type="gaussian">
+						<mean>0</mean>
+						<stddev>0.01</stddev>
+					</noise>
+				</pressure>
+				</air_pressure>
+			</sensor>
+
+			<!-- adicao de imu -->
+			<sensor name="imu_sensor" type="imu">
+				<always_on>1</always_on>
+				<update_rate>250</update_rate>
+				<imu>
+					<angular_velocity>
+						<x>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00018665</stddev>
+								<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+							</noise>
+						</x>
+						<y>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00018665</stddev>
+								<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+							</noise>
+						</y>
+						<z>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00018665</stddev>
+								<dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+							</noise>
+						</z>
+					</angular_velocity>
+					<linear_acceleration>
+						<x>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00186</stddev>
+								<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+							</noise>
+						</x>
+						<y>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00186</stddev>
+								<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+							</noise>
+						</y>
+						<z>
+							<noise type="gaussian">
+								<mean>0</mean>
+								<stddev>0.00186</stddev>
+								<dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+								<dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+							</noise>
+						</z>
+					</linear_acceleration>
+				</imu>
+			</sensor>
+
+			<!-- sensor nav_sat -->
+			<!-- <sensor name="navsat_sensor" type="navsat">
+				<always_on>1</always_on>
+				<update_rate>30</update_rate>
+			</sensor> -->
+
+			<!-- magnetometro -->
+			<!-- nesse caso, o nome do magnetometro deve coincidir com o que foi declarado na linha 224 do GZBridge.cpp. Caso contrario, a px4 nao consegue fazer a ponte do topico do GZ para a PX4 -->
+			<sensor name="magnetometer_sensor" type="magnetometer">
+				<always_on>1</always_on>
+				<update_rate>50</update_rate>
+				<magnetometer>
+				<x>
+					<noise type="gaussian">
+					<mean>0.000000080</mean>
+					<bias_mean>0.000000400</bias_mean>
+					</noise>
+				</x>
+				<y>
+					<noise type="gaussian">
+					<mean>0.000000080</mean>
+					<bias_mean>0.000000400</bias_mean>
+					</noise>
+				</y>
+				<z>
+					<noise type="gaussian">
+					<mean>0.000000080</mean>
+					<bias_mean>0.000000400</bias_mean>
+					</noise>
+				</z>
+				</magnetometer>
+			</sensor>
+		</link>
+		<link name="rotor_0">
+			<self_collide>false</self_collide>
+			<pose>0.12938260244722544 -0.12858244917304149 0.03227004135181551 0.0 -0.0 0.0</pose>
+			<inertial>
+				<pose>0.0 0.0 0.0 0 0 0</pose>
+				<mass>0.006628573240604612</mass>
+				<inertia>
+					<ixx>5.988136231671271e-06</ixx>
+					<ixy>6.020984592179168e-06</ixy>
+					<ixz>-1.114135124713478e-11</ixz>
+					<iyy>6.299477870898551e-06</iyy>
+					<iyz>1.481826548133114e-11</iyz>
+					<izz>1.2232003336857079e-05</izz>
+				</inertia>
+			</inertial>
+			<collision name="rotor_0_collision">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_0.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+			</collision>
+			<visual name="rotor_0_visual">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_0.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+
+				<material>
+					<ambient>0.694 0.071 0.071 1.0</ambient> <!-- Vermelho (#B21613) -->
+					<diffuse>0.694 0.071 0.071 1.0</diffuse>
+					<specular>0.5 0.5 0.5 1.0</specular>
+				</material>
+			</visual>
+		</link>
+		<link name="rotor_1">
+			<self_collide>false</self_collide>
+			<pose>-0.12778244887951665 0.1285826021537006 0.03153554389938566 0.0 -0.0 0.0</pose>
+			<inertial>
+				<pose>0.0 0.0 0.0 0 0 0</pose>
+				<mass>0.006628573240604614</mass>
+				<inertia>
+					<ixx>6.305349416705464e-06</ixx>
+					<ixy>6.020984818518427e-06</ixy>
+					<ixz>-1.617587697677614e-11</ixz>
+					<iyy>5.9940043839746385e-06</iyy>
+					<iyz>1.3786173408414372e-11</iyz>
+					<izz>1.2232003789535596e-05</izz>
+				</inertia>
+			</inertial>
+			<collision name="rotor_1_collision">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_1.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+			</collision>
+			<visual name="rotor_1_visual">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_1.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+
+				<material>
+					<ambient>0.01 0.01 0.01 1.0</ambient> <!-- Preto -->
+					<diffuse>0.01 0.01 0.01 1.0</diffuse>
+					<specular>0.5 0.5 0.5 1.0</specular>
+				</material>
+			</visual>
+		</link>
+		<link name="rotor_2">
+			<self_collide>false</self_collide>
+			<pose>0.12938260255998452 0.12858244906066796 0.03227004135179345 0.0 -0.0 0.0</pose>
+			<inertial>
+				<pose>0.0 0.0 0.0 0 0 0</pose>
+				<mass>0.0066285732406325655</mass>
+				<inertia>
+					<ixx>5.9881345355253585e-06</ixx>
+					<ixy>-6.020984592147816e-06</ixy>
+					<ixz>-1.1143983358330446e-11</ixz>
+					<iyy>6.299479566836386e-06</iyy>
+					<iyz>-1.4815628374131862e-11</iyz>
+					<izz>1.2232003336799747e-05</izz>
+				</inertia>
+			</inertial>
+			<collision name="rotor_2_collision">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_2.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+			</collision>
+			<visual name="rotor_2_visual">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_2.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+
+				<material>
+					<ambient>0.694 0.071 0.071 1.0</ambient> <!-- Vermelho (#B21613) -->
+					<diffuse>0.694 0.071 0.071 1.0</diffuse>
+					<specular>0.5 0.5 0.5 1.0</specular>
+				</material>
+			</visual>
+		</link>
+		<link name="rotor_3">
+			<self_collide>false</self_collide>
+			<pose>-0.12778420736913432 -0.12858244883353315 0.03153554389940266 0.0 -0.0 0.0</pose>
+			<inertial>
+				<pose>0.0 0.0 0.0 0 0 0</pose>
+				<mass>0.0066285732406325395</mass>
+				<inertia>
+					<ixx>5.994005854284002e-06</ixx>
+					<ixy>6.021020971878133e-06</ixy>
+					<ixz>4.88841928603101e-12</ixz>
+					<iyy>6.30534794573725e-06</iyy>
+					<iyz>-1.620681405745117e-11</iyz>
+					<izz>1.2232003789027913e-05</izz>
+				</inertia>
+			</inertial>
+			<collision name="rotor_3_collision">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_3.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+			</collision>
+			<visual name="rotor_3_visual">
+				<geometry>
+					<mesh>
+						<uri>model://silver/meshes/CAD/rotor_3.stl</uri>
+						<scale>0.001 0.001 0.001</scale>
+					</mesh>
+				</geometry>
+
+				<material>
+					<ambient>0.01 0.01 0.01 1.0</ambient> <!-- Preto -->
+					<diffuse>0.01 0.01 0.01 1.0</diffuse>
+					<specular>0.5 0.5 0.5 1.0</specular>
+				</material>
+			</visual>
+		</link>
+		<joint name="rotor_2_joint" type="revolute">
+			<parent>base_link</parent>
+			<child>rotor_2</child>
+			<pose>7.916201886359886e-07 9.451195052356809e-07 -0.004970041351793575 0 0 0</pose>
+			<axis>
+				<xyz>2.4480951069345032e-17 -1.0285444538771263e-16 -0.9999999999999998</xyz>
+				<limit>
+					<lower>-1e+16</lower>
+          			<upper>1e+16</upper>
+				</limit>
+				<dynamics>
+        				<spring_reference>0</spring_reference>
+        				<spring_stiffness>0</spring_stiffness>
+    			</dynamics>
+			</axis>
+		</joint>
+		<joint name="rotor_3_joint" type="revolute">
+			<parent>base_link</parent>
+			<child>rotor_3</child>
+			<pose>8.131889607554399e-07 -9.453466400088929e-07 -0.0042355438994028825 0 0 0</pose>
+			<axis>
+				<xyz>1.2513118630343236e-15 -4.4630592655268967e-17 -0.9999999999999999</xyz>
+				<limit>
+					<lower>-1e+16</lower>
+          			<upper>1e+16</upper>
+				</limit>
+				<dynamics>
+        				<spring_reference>0</spring_reference>
+        				<spring_stiffness>0</spring_stiffness>
+    			</dynamics>
+			</axis>
+		</joint>
+		<joint name="rotor_1_joint" type="revolute">
+			<parent>base_link</parent>
+			<child>rotor_1</child>
+			<pose>-9.453006568094225e-07 7.920264728333848e-07 -0.00423554389938587 0 0 0</pose>
+			<axis>
+				<xyz>2.4694738632952307e-16 -6.144982215161297e-17 -0.9999999999999991</xyz>
+				<limit>
+					<lower>-1e+16</lower>
+          			<upper>1e+16</upper>
+				</limit>
+				<dynamics>
+        				<spring_reference>0</spring_reference>
+        				<spring_stiffness>0</spring_stiffness>
+    			</dynamics>
+			</axis>
+		</joint>
+		<joint name="rotor_0_joint" type="revolute">
+			<parent>base_link</parent>
+			<child>rotor_0</child>
+			<pose>7.917329475048973e-07 -9.450071317473885e-07 -0.0049700413518156865 0 0 0</pose>
+			<axis>
+				<xyz>4.282388940161696e-17 1.1764216141113162e-17 -1.0</xyz>
+				<limit>
+					<lower>-1e+16</lower>
+          			<upper>1e+16</upper>
+				</limit>
+				<dynamics>
+        				<spring_reference>0</spring_reference>
+        				<spring_stiffness>0</spring_stiffness>
+    			</dynamics>
+			</axis>
+		</joint>
+
+		<plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+			<jointName>rotor_0_joint</jointName>
+			<linkName>rotor_0</linkName>
+			<turningDirection>ccw</turningDirection>
+			<timeConstantUp>0.0125</timeConstantUp>
+			<timeConstantDown>0.025</timeConstantDown>
+			<maxRotVelocity>1000.0</maxRotVelocity>
+			<motorConstant>8.54858e-06</motorConstant>
+			<momentConstant>0.016</momentConstant>
+			<commandSubTopic>command/motor_speed</commandSubTopic>
+			<motorNumber>0</motorNumber>
+			<rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+			<rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+			<rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+			<motorType>velocity</motorType>
+		</plugin>
+		<plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+			<jointName>rotor_1_joint</jointName>
+			<linkName>rotor_1</linkName>
+			<turningDirection>ccw</turningDirection>
+			<timeConstantUp>0.0125</timeConstantUp>
+			<timeConstantDown>0.025</timeConstantDown>
+			<maxRotVelocity>1000.0</maxRotVelocity>
+			<motorConstant>8.54858e-06</motorConstant>
+			<momentConstant>0.016</momentConstant>
+			<commandSubTopic>command/motor_speed</commandSubTopic>
+			<motorNumber>1</motorNumber>
+			<rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+			<rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+			<rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+			<motorType>velocity</motorType>
+		</plugin>
+		<plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+			<jointName>rotor_2_joint</jointName>
+			<linkName>rotor_2</linkName>
+			<turningDirection>cw</turningDirection>
+			<timeConstantUp>0.0125</timeConstantUp>
+			<timeConstantDown>0.025</timeConstantDown>
+			<maxRotVelocity>1000.0</maxRotVelocity>
+			<motorConstant>8.54858e-06</motorConstant>
+			<momentConstant>0.016</momentConstant>
+			<commandSubTopic>command/motor_speed</commandSubTopic>
+			<motorNumber>2</motorNumber>
+			<rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+			<rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+			<rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+			<motorType>velocity</motorType>
+		</plugin>
+		<plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+			<jointName>rotor_3_joint</jointName>
+			<linkName>rotor_3</linkName>
+			<turningDirection>cw</turningDirection>
+			<timeConstantUp>0.0125</timeConstantUp>
+			<timeConstantDown>0.025</timeConstantDown>
+			<maxRotVelocity>1000.0</maxRotVelocity>
+			<motorConstant>8.54858e-06</motorConstant>
+			<momentConstant>0.016</momentConstant>
+			<commandSubTopic>command/motor_speed</commandSubTopic>
+			<motorNumber>3</motorNumber>
+			<rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+			<rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+			<rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+			<motorType>velocity</motorType>
+		</plugin>
+
+
+	</model>
+</sdf>

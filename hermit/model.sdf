@@ -320,7 +320,7 @@
 				<dynamics>
         				<spring_reference>0</spring_reference>
         				<spring_stiffness>0</spring_stiffness>
-    			  	</dynamics>
+    			</dynamics>
 			</axis>
 		</joint>
 		<joint name="rotor_1_joint" type="revolute">
