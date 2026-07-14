@@ -55,7 +55,7 @@
       </sensor>
       
       <!-- Câmera de profundidade (float32) -->
-      <!-- <sensor name="depth_camera_sensor" type="depth_camera">
+      <sensor name="depth_camera_sensor" type="depth_camera">
         <pose>0 0.010 0 0 0 0</pose>
         <always_on>1</always_on>
         <update_rate>30</update_rate>
@@ -73,8 +73,7 @@
           </clip>
         </camera>
       </sensor>
-       -->
-      
+
      <sensor name="Realsense-D435" type="rgbd_camera">
       <pose>0.129227 0 0.0507 0 0 0</pose>
         <update_rate>60</update_rate>

@@ -410,5 +410,98 @@
             <child>realsense_d455/base</child>
             <pose relative_to="base_link">0.129227 0 0.0507 0 1.57 0</pose>
         </joint>
+
+        <!-- ===================== LiDAR 2D tipo RPLIDAR A2 ===================== -->
+        <link name="lidar_mount_link">
+            <pose>0 0 0.09 0 0 0</pose> <!-- ajuste a altura se necessário -->
+            <inertial>
+                <pose>0 0 0 0 0 0</pose>
+                <mass>0.15</mass>
+                <inertia>
+                    <ixx>0.0002</ixx>
+                    <iyy>0.0002</iyy>
+                    <izz>0.0002</izz>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyz>0</iyz>
+                </inertia>
+            </inertial>
+
+            <collision name="lidar_mount_collision">
+                <geometry>
+                    <box>
+                        <size>0.09 0.09 0.04</size> <!-- 9x9x4 cm -->
+                    </box>
+                </geometry>
+            </collision>
+
+            <visual name="lidar_mount_visual">
+                <geometry>
+                    <box>
+                        <size>0.09 0.09 0.04</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>0.15 0.15 0.15 1</ambient>
+                    <diffuse>0.15 0.15 0.15 1</diffuse>
+                    <specular>0.1 0.1 0.1 1</specular>
+                </material>
+            </visual>
+
+            <visual name="lidar_top_visual">
+                <pose>0 0 0.025 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.042</radius>
+                        <length>0.012</length>
+                    </cylinder>
+                </geometry>
+                <material>
+                    <ambient>0.02 0.02 0.02 1</ambient>
+                    <diffuse>0.02 0.02 0.02 1</diffuse>
+                    <specular>0.3 0.3 0.3 1</specular>
+                </material>
+            </visual>
+
+            <!-- Sensor LiDAR 2D (Ignition / gz-sim) -->
+            <sensor name="rplidar_a2" type="gpu_lidar">
+                <always_on>1</always_on>
+                <update_rate>10</update_rate>
+                <pose>0 0 0.03 0 0 0</pose>
+                <topic>/scan</topic> <!-- LaserScan em /scan (+ /scan/points) -->
+                <lidar>
+                    <scan>
+                        <horizontal>
+                            <samples>1600</samples> <!-- ~0.225° -->
+                            <resolution>1</resolution>
+                            <min_angle>-3.1415926535</min_angle>
+                            <max_angle>3.1415926535</max_angle>
+                        </horizontal>
+                        <vertical>
+                            <samples>1</samples>
+                            <min_angle>0</min_angle>
+                            <max_angle>0</max_angle>
+                        </vertical>
+                    </scan>
+                    <range>
+                        <min>0.2</min>
+                        <max>12.0</max>
+                        <resolution>0.01</resolution>
+                    </range>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.01</stddev>
+                    </noise>
+                </lidar>
+            </sensor>
+        </link>
+
+        <joint name="lidar_mount_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>lidar_mount_link</child>
+            <pose>0 0 0 0 0 0</pose>
+        </joint>
+        <!-- ===================== FIM LiDAR ===================== -->
     </model>
 </sdf>
