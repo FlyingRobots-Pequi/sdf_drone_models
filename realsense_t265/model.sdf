@@ -41,7 +41,7 @@
 
             <!-- Fisheye Camera 1 -->
             <sensor name="fishEye1" type="wideanglecamera">
-                <pose>0.032 0 0 -1.57 1.57 0</pose>
+                <pose>0.032 0 0 -1.5707963267948966 1.5707963267948966 0</pose>
                 <camera>
                     <horizontal_fov>3.14</horizontal_fov>
                     <image>
@@ -85,7 +85,7 @@
 
             <!-- Fisheye Camera 2 -->
             <sensor name="fishEye2" type="wideanglecamera">
-                <pose>-0.032 0 0 -1.57 1.57 0</pose>
+                <pose>-0.032 0 0 -1.5707963267948966 1.5707963267948966 0</pose>
                 <camera>
                     <horizontal_fov>3.14</horizontal_fov>
                     <image>
@@ -201,7 +201,13 @@
 
         </link>
 
-      <plugin
+      <!-- "VIO perfeito" desabilitado de proposito: este plugin publica a pose
+           ground-truth do modelo (tambem no topico default
+           /model/<modelo>/odometry_with_covariance, que o GZBridge repassa ao
+           PX4 como vehicle_visual_odometry -> EKF2 funde como external vision).
+           Sem ele NAO ha posicao local no EKF e o drone nao voa em
+           Position/Takeoff/Offboard ate outra fonte de odometria publicar. -->
+      <!-- <plugin
         filename="gz-sim-odometry-publisher-system"
         name="gz::sim::systems::OdometryPublisher">
         <dimensions>3</dimensions>
@@ -210,7 +216,7 @@
         <tf_topic>camera</tf_topic>
         <gaussian_noise>0.000001</gaussian_noise>
         <odom_publish_frequency>100</odom_publish_frequency>
-      </plugin>
+      </plugin> -->
 
     </model>
 </sdf>

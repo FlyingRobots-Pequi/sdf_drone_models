@@ -122,6 +122,12 @@
 
           <!-- magnetometro -->
           <!-- nesse caso, o nome do magnetometro deve coincidir com o que foi declarado na linha 224 do GZBridge.cpp. Caso contrario, a px4 nao consegue fazer a ponte do topico do GZ para a PX4 -->
+          <!-- stddev > 0 e' OBRIGATORIO: sem ruido o valor publicado e' bit-identico
+               a cada amostra com o drone parado, e o DataValidator do PX4 declara
+               "MAG #0 failed: STALE" (ERROR_FLAG_STALE_DATA = mesmo valor N vezes
+               seguidas, tolerancia 1e-6). Unidade: a mesma do field_tesla publicado
+               (magnitude ~0.48 neste world, escala de Gauss); 0.005 ~ 5 mG, na ordem
+               do sensor_mag_sim do PX4 (0.02-0.03 G). -->
           <sensor name="magnetometer_sensor" type="magnetometer">
             <always_on>1</always_on>
             <update_rate>50</update_rate>
@@ -129,18 +135,21 @@
               <x>
                 <noise type="gaussian">
                   <mean>0.000000080</mean>
+                  <stddev>0.005</stddev>
                   <bias_mean>0.000000400</bias_mean>
                 </noise>
               </x>
               <y>
                 <noise type="gaussian">
                   <mean>0.000000080</mean>
+                  <stddev>0.005</stddev>
                   <bias_mean>0.000000400</bias_mean>
                 </noise>
               </y>
               <z>
                 <noise type="gaussian">
                   <mean>0.000000080</mean>
+                  <stddev>0.005</stddev>
                   <bias_mean>0.000000400</bias_mean>
                 </noise>
               </z>
@@ -175,11 +184,13 @@
             </material>
           </visual>
           <collision name="rotor_0_1_collision">
+            <!-- Box identical to rotor_0_1__col.stl (the STL is itself a 12-tri box);
+                 a primitive avoids ODE trimesh-trimesh contacts. -->
+            <pose>0.176385 -0.176385 0.06258 0 0 0</pose>
             <geometry>
-              <mesh>
-                <scale>0.001 0.001 0.001</scale>
-                <uri>meshes/rotor_0_1__col.stl</uri>
-              </mesh>
+              <box>
+                <size>0.0293 0.2543 0.0114</size>
+              </box>
             </geometry>
           </collision>
         </link>
@@ -211,11 +222,13 @@
             </material>
           </visual>
           <collision name="rotor_1_1_collision">
+            <!-- Box identical to rotor_1_1__col.stl (the STL is itself a 12-tri box);
+                 a primitive avoids ODE trimesh-trimesh contacts. -->
+            <pose>-0.176385 0.176385 0.06258 0 0 0</pose>
             <geometry>
-              <mesh>
-                <scale>0.001 0.001 0.001</scale>
-                <uri>meshes/rotor_1_1__col.stl</uri>
-              </mesh>
+              <box>
+                <size>0.0293 0.2543 0.0114</size>
+              </box>
             </geometry>
           </collision>
         </link>
@@ -247,11 +260,13 @@
             </material>
           </visual>
           <collision name="rotor_2_1_collision">
+            <!-- Box identical to rotor_2_1__col.stl (the STL is itself a 12-tri box);
+                 a primitive avoids ODE trimesh-trimesh contacts. -->
+            <pose>0.176385 0.176385 0.06258 0 0 0</pose>
             <geometry>
-              <mesh>
-                <scale>0.001 0.001 0.001</scale>
-                <uri>meshes/rotor_2_1__col.stl</uri>
-              </mesh>
+              <box>
+                <size>0.0293 0.2543 0.0114</size>
+              </box>
             </geometry>
           </collision>
         </link>
@@ -283,44 +298,66 @@
             </material>
           </visual>
           <collision name="rotor_3_1_collision">
+            <!-- Box identical to rotor_3_1__col.stl (the STL is itself a 12-tri box);
+                 a primitive avoids ODE trimesh-trimesh contacts. -->
+            <pose>-0.176385 -0.176385 0.06258 0 0 0</pose>
             <geometry>
-              <mesh>
-                <scale>0.001 0.001 0.001</scale>
-                <uri>meshes/rotor_3_1__col.stl</uri>
-              </mesh>
+              <box>
+                <size>0.0293 0.2543 0.0114</size>
+              </box>
             </geometry>
           </collision>
         </link>
-        <joint name="rotor_0_joint" type="continuous">
+        <!-- Juntas dos rotores: "continuous" NAO e' suportado pelo DART (gz
+             Garden) — vira joint FIXO silenciosamente e o MulticopterMotorModel
+             nunca aplica empuxo (helice parada, drone nao voa). Usar revolute
+             com limites +-1e16, como no x500 do PX4. -->
+        <joint name="rotor_0_joint" type="revolute">
           <pose relative_to="__model__">0.17638475093013944 -0.17638475093013636 0.05729999999999826 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_0</child>
           <axis>
             <xyz expressed_in="__model__">1.3844322706171756e-16 -2.26332997379012e-16 1.000000000000001</xyz>
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
           </axis>
         </joint>
-        <joint name="rotor_1_joint" type="continuous">
+        <joint name="rotor_1_joint" type="revolute">
           <pose relative_to="__model__">-0.1763847509301365 0.17638475093013736 0.057300000000000066 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_1</child>
           <axis>
             <xyz expressed_in="__model__">-5.825324369117805e-16 -2.1775621247104748e-16 1.000000000000001</xyz>
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
           </axis>
         </joint>
-        <joint name="rotor_2_joint" type="continuous">
+        <joint name="rotor_2_joint" type="revolute">
           <pose relative_to="__model__">0.1763847509301355 0.17638475093014036 0.057299999999998324 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_2</child>
           <axis>
             <xyz expressed_in="__model__">-2.177562124710515e-16 1.3844322706171766e-16 1.000000000000001</xyz>
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
           </axis>
         </joint>
-        <joint name="rotor_3_joint" type="continuous">
+        <joint name="rotor_3_joint" type="revolute">
           <pose relative_to="__model__">-0.17638475093013656 -0.1763847509301394 0.0572999999999982 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_3</child>
           <axis>
             <xyz expressed_in="__model__">-2.263329973790141e-16 -5.825324369117797e-16 1.000000000000001</xyz>
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
           </axis>
         </joint>
 
@@ -392,23 +429,23 @@
         <!-- camera realsense T265 -->
         <include merge='true'>
             <uri>model://realsense_t265</uri>
-            <pose>0.1125 0.020 0.013 -1.57 3.14 1.57</pose>
+            <pose>0.1125 0.020 0.013 -1.5707963267948966 3.141592653589793 1.5707963267948966</pose>
         </include>
         <joint name="CameraJoint" type="fixed">
             <parent>base_link</parent>
             <child>realsense_t265/base</child>
-            <pose relative_to="base_link">0.100 0.020 0.013 -1.57 3.14 1.57</pose>
+            <pose relative_to="base_link">0.1125 0.020 0.013 -1.5707963267948966 3.141592653589793 1.5707963267948966</pose>
         </joint>
 
         <!-- camera realsense D455 -->
         <include merge="true">
             <uri>model://realsense_d455</uri>
-            <pose>0.129227 0 -0.0507 0 1.57 0</pose>
+            <pose>0.129227 0 -0.0507 0 1.5707963267948966 0</pose>
         </include>
         <joint name="CameraJointD455" type="fixed">
             <parent>base_link</parent>
             <child>realsense_d455/base</child>
-            <pose relative_to="base_link">0.129227 0 0.0507 0 1.57 0</pose>
+            <pose relative_to="base_link">0.129227 0 -0.0507 0 1.5707963267948966 0</pose>
         </joint>
 
         <!-- ===================== LiDAR 2D tipo RPLIDAR A2 ===================== -->
