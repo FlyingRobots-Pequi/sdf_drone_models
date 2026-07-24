@@ -426,26 +426,16 @@
             <motorType>velocity</motorType>
         </plugin>
 
-        <!-- camera realsense T265 -->
-        <include merge='true'>
-            <uri>model://realsense_t265</uri>
-            <pose>0.1125 0.020 0.013 -1.5707963267948966 3.141592653589793 1.5707963267948966</pose>
-        </include>
-        <joint name="CameraJoint" type="fixed">
-            <parent>base_link</parent>
-            <child>realsense_t265/base</child>
-            <pose relative_to="base_link">0.1125 0.020 0.013 -1.5707963267948966 3.141592653589793 1.5707963267948966</pose>
-        </joint>
-
-        <!-- camera realsense D455 -->
+        <!-- D455 montada na frente do drone. Os sensores camera do Gazebo
+             observam no eixo +X; rotacao nula mantem RGB e depth para frente. -->
         <include merge="true">
             <uri>model://realsense_d455</uri>
-            <pose>0.129227 0 -0.0507 0 1.5707963267948966 0</pose>
+            <pose>0.129227 0 -0.0507 0 0 0</pose>
         </include>
         <joint name="CameraJointD455" type="fixed">
             <parent>base_link</parent>
             <child>realsense_d455/base</child>
-            <pose relative_to="base_link">0.129227 0 -0.0507 0 1.5707963267948966 0</pose>
+            <pose relative_to="base_link">0.129227 0 -0.0507 0 0 0</pose>
         </joint>
 
         <!-- ===================== LiDAR 2D tipo RPLIDAR A2 ===================== -->
@@ -502,10 +492,11 @@
 
             <!-- Sensor LiDAR 2D (Ignition / gz-sim) -->
             <sensor name="rplidar_a2" type="gpu_lidar">
-                <always_on>1</always_on>
+                <!-- Ativado sob demanda pela bridge lazy. -->
+                <always_on>0</always_on>
                 <update_rate>10</update_rate>
                 <pose>0 0 0.03 0 0 0</pose>
-                <topic>/scan</topic> <!-- LaserScan em /scan (+ /scan/points) -->
+                <topic>/scan</topic> <!-- Somente LaserScan cruza a bridge ROS. -->
                 <lidar>
                     <scan>
                         <horizontal>
