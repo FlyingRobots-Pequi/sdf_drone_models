@@ -75,6 +75,31 @@
             <near>0.1</near>
             <far>10.0</far>
           </clip>
+          <!--
+            O DepthCamera do Gazebo Garden usa os defaults 320x240 do
+            SDFormat (fx=fy=277, cx=160, cy=120) no CameraInfo quando a lente
+            nao declara intrinsecos. Estes valores correspondem ao perfil
+            848x480 e ao horizontal_fov de 80 graus definido acima.
+          -->
+          <lens>
+            <type>gnomonical</type>
+            <scale_to_hfov>true</scale_to_hfov>
+            <intrinsics>
+              <fx>505.3052686175046</fx>
+              <fy>505.3052686175046</fy>
+              <cx>424.0</cx>
+              <cy>240.0</cy>
+              <s>0.0</s>
+            </intrinsics>
+            <projection>
+              <p_fx>505.3052686175046</p_fx>
+              <p_fy>505.3052686175046</p_fy>
+              <p_cx>424.0</p_cx>
+              <p_cy>240.0</p_cy>
+              <tx>0.0</tx>
+              <ty>0.0</ty>
+            </projection>
+          </lens>
         </camera>
       </sensor>
 
