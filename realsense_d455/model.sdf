@@ -32,213 +32,64 @@
 					</mesh>
 				</geometry>
 			</visual>
-      
-      <!-- Câmera colorida (RGB) -->
-      <sensor name="color_camera_sensor" type="camera">
-        <pose>0 0.0475 0 0 0 0</pose>
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <!-- Publicar no tópico /camera/color/image_raw -->
-        <topic>/camera/color/image_raw</topic>
-        <camera>
-          <horizontal_fov>1.39626</horizontal_fov>
-          <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>R8G8B8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>10.0</far>
-          </clip>
-        </camera>
-      </sensor>
-      
-      <!-- Câmera de profundidade (float32) -->
-      <sensor name="depth_camera_sensor" type="depth_camera">
-        <pose>0 0.010 0 0 0 0</pose>
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <topic>/camera/depth/image_rect_raw</topic>
-        <camera>
-          <horizontal_fov>1.39626</horizontal_fov>
-          <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>R_FLOAT32</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>10.0</far>
-          </clip>
-        </camera>
-      </sensor>
 
-     <sensor name="Realsense-D435" type="rgbd_camera">
-      <pose>0.129227 0 0.0507 0 0 0</pose>
-        <update_rate>60</update_rate>
+      <!-- D455 modelado como sensores SEPARADOS camera (RGB) + depth_camera, e NAO um
+           unico rgbd_camera: o tipo rgbd_camera nao renderiza no Gazebo Garden (gz-sim7)
+           usado por este SITL (sai imagem chapada de fundo). camera + depth_camera e o
+           padrao do OakD-Lite/stock, que funciona no Garden. Confirmado em runtime:
+           camera simples nesta mesma pose plota a cena.
+           pitch -90deg compensa o +90deg do CameraJointD455 (hermit) -> boresight p/ frente.
+           RGB e depth compartilham pose/FOV/resolucao -> depth registrado ao RGB (mesmo
+           camera_info), como o RTAB-Map espera. -->
+      <sensor name="d455_color" type="camera">
+        <gz_frame_id>camera_link</gz_frame_id>
+        <pose>0 0 0 0 -1.5707963267948966 0</pose>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <topic>/camera/d455/color</topic>
         <camera name="camera">
-          <horizontal_fov>1.0472</horizontal_fov>
-          <lens>
-            <intrinsics>
-              <!-- fx = fy = width / ( 2 * tan (hfov / 2 ) ) -->
-              <fx>554.25469</fx>
-              <fy>554.25469</fy>
-              <!-- cx = ( width + 1 ) / 2 -->
-              <cx>320.5</cx>
-              <!-- cy = ( height + 1 ) / 2 -->
-              <cy>240.5</cy>
-              <s>0</s>
-            </intrinsics>
-          </lens>
-          <distortion>
-            <k1>0.0</k1>
-            <k2>0.0</k2>
-            <k3>0.0</k3>
-            <p1>0.0</p1>
-            <p2>0.0</p2>
-            <center>0.5 0.5</center>
-          </distortion>
+          <!-- D455 depth FOV (datasheet): 87 x 58 deg -->
+          <horizontal_fov>1.518</horizontal_fov>
           <image>
             <width>640</width>
             <height>480</height>
             <format>R8G8B8</format>
           </image>
           <clip>
-            <near>0.01</near>
-            <far>300</far>
+            <near>0.1</near>
+            <far>100.0</far>
           </clip>
-          <depth_camera>
-            <clip>
-              <near>0.1</near>
-              <far>10</far>
-            </clip>
-          </depth_camera>
           <noise>
             <type>gaussian</type>
             <mean>0</mean>
             <stddev>0.007</stddev>
           </noise>
         </camera>
-        <topic>realsense____</topic>
       </sensor>
 
-      <!-- Câmera IR1 pseudo-colorida (depth_camera) -->
-      <sensor name="infra1_camera_sensor" type="depth_camera">
-        <pose>0 -0.0115 0 0 0 0</pose>
+      <sensor name="d455_depth" type="depth_camera">
+        <gz_frame_id>camera_link</gz_frame_id>
+        <pose>0 0 0 0 -1.5707963267948966 0</pose>
         <always_on>1</always_on>
         <update_rate>30</update_rate>
-        <!-- Publicar no tópico /camera/infra1/image_rect_raw -->
-        <topic>/camera/infra1/image_rect_raw</topic>
-        <camera>
-          <horizontal_fov>1.39626</horizontal_fov>
+        <topic>/camera/d455/depth</topic>
+        <camera name="camera">
+          <horizontal_fov>1.518</horizontal_fov>
           <image>
-            <width>1280</width>
-            <height>720</height>
+            <width>640</width>
+            <height>480</height>
             <format>R_FLOAT32</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>10.0</far>
-          </clip>
-          <!-- Ativa visualização pseudo-color no Gazebo -->
-          <visualize>true</visualize>
-        </camera>
-      </sensor>
-      
-      <!-- Câmera IR2 monocromática (L8) -->
-      <sensor name="infra2_camera_sensor" type="camera">
-        <pose>0 -0.0475 0 0 0 0</pose>
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <!-- Publicar no tópico /camera/infra2/image_rect_raw -->
-        <topic>/camera/infra2/image_rect_raw</topic>
-        <camera>
-          <horizontal_fov>1.39626</horizontal_fov>
-          <image>
-            <width>1280</width>
-            <height>720</height>
-            <format>L8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>10.0</far>
+            <!-- D455: range util ~0.4-6m, mas alcance maximo ~20m; far maior garante
+                 depth das superficies da arena (senao clipa tudo em inf). OakD-Lite
+                 stock usa 19.1 pela mesma razao. -->
+            <near>0.4</near>
+            <far>20.0</far>
           </clip>
         </camera>
-      </sensor>
-      
-      <!-- Giroscópio -->
-      <sensor name="gyro_sensor" type="imu">
-        <pose>-9.98 0.01728 7.4 0 0 0</pose>
-        <always_on>1</always_on>
-        <update_rate>200</update_rate>
-        <topic>/camera/gyro/sample</topic>
-        <imu>
-          <angular_velocity>
-            <x>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00087266</stddev>
-                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-              </noise>
-            </x>
-            <y>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00087266</stddev>
-                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-              </noise>
-            </y>
-            <z>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.00087266</stddev>
-                <dynamic_bias_stddev>0.0001</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
-              </noise>
-            </z>
-          </angular_velocity>
-        </imu>
       </sensor>
 
-      <!-- Acelerômetro -->
-      <sensor name="accel_sensor" type="imu">
-        <pose>-9.98 0.01728 7.4 0 0 0</pose>
-        <always_on>1</always_on>
-        <update_rate>200</update_rate>
-        <topic>/camera/accel/sample</topic>
-        <imu>
-          <linear_acceleration>
-            <x>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.03924</stddev>
-                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-              </noise>
-            </x>
-            <y>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.03924</stddev>
-                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-              </noise>
-            </y>
-            <z>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.03924</stddev>
-                <dynamic_bias_stddev>0.0006</dynamic_bias_stddev>
-                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
-              </noise>
-            </z>
-          </linear_acceleration>
-        </imu>
-      </sensor>
-      
     </link>
   </model>
 </sdf>

@@ -129,18 +129,21 @@
               <x>
                 <noise type="gaussian">
                   <mean>0.000000080</mean>
+                  <stddev>0.005</stddev>
                   <bias_mean>0.000000400</bias_mean>
                 </noise>
               </x>
               <y>
                 <noise type="gaussian">
                   <mean>0.000000080</mean>
+                  <stddev>0.005</stddev>
                   <bias_mean>0.000000400</bias_mean>
                 </noise>
               </y>
               <z>
                 <noise type="gaussian">
                   <mean>0.000000080</mean>
+                  <stddev>0.005</stddev>
                   <bias_mean>0.000000400</bias_mean>
                 </noise>
               </z>
@@ -291,36 +294,71 @@
             </geometry>
           </collision>
         </link>
-        <joint name="rotor_0_joint" type="continuous">
+        <joint name="rotor_0_joint" type="revolute">
           <pose relative_to="__model__">0.17638475093013944 -0.17638475093013636 0.05729999999999826 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_0</child>
           <axis>
             <xyz expressed_in="__model__">1.3844322706171756e-16 -2.26332997379012e-16 1.000000000000001</xyz>
+            <!-- DART (motor de fisica do gz-sim) nao suporta joint "continuous" e o
+                 substitui silenciosamente por FIXED (sem empuxo). Rotores devem ser
+                 "revolute" com limite gigante, como o x500_base do PX4. -->
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
+            <dynamics>
+              <spring_reference>0</spring_reference>
+              <spring_stiffness>0</spring_stiffness>
+            </dynamics>
           </axis>
         </joint>
-        <joint name="rotor_1_joint" type="continuous">
+        <joint name="rotor_1_joint" type="revolute">
           <pose relative_to="__model__">-0.1763847509301365 0.17638475093013736 0.057300000000000066 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_1</child>
           <axis>
             <xyz expressed_in="__model__">-5.825324369117805e-16 -2.1775621247104748e-16 1.000000000000001</xyz>
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
+            <dynamics>
+              <spring_reference>0</spring_reference>
+              <spring_stiffness>0</spring_stiffness>
+            </dynamics>
           </axis>
         </joint>
-        <joint name="rotor_2_joint" type="continuous">
+        <joint name="rotor_2_joint" type="revolute">
           <pose relative_to="__model__">0.1763847509301355 0.17638475093014036 0.057299999999998324 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_2</child>
           <axis>
             <xyz expressed_in="__model__">-2.177562124710515e-16 1.3844322706171766e-16 1.000000000000001</xyz>
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
+            <dynamics>
+              <spring_reference>0</spring_reference>
+              <spring_stiffness>0</spring_stiffness>
+            </dynamics>
           </axis>
         </joint>
-        <joint name="rotor_3_joint" type="continuous">
+        <joint name="rotor_3_joint" type="revolute">
           <pose relative_to="__model__">-0.17638475093013656 -0.1763847509301394 0.0572999999999982 0.0 -0.0 0.0</pose>
           <parent>base_link</parent>
           <child>rotor_3</child>
           <axis>
             <xyz expressed_in="__model__">-2.263329973790141e-16 -5.825324369117797e-16 1.000000000000001</xyz>
+            <limit>
+              <lower>-1e+16</lower>
+              <upper>1e+16</upper>
+            </limit>
+            <dynamics>
+              <spring_reference>0</spring_reference>
+              <spring_stiffness>0</spring_stiffness>
+            </dynamics>
           </axis>
         </joint>
 
@@ -403,7 +441,7 @@
         <!-- camera realsense D455 -->
         <include merge="true">
             <uri>model://realsense_d455</uri>
-            <pose>0.129227 0 -0.0507 0 1.57 0</pose>
+            <pose>0.129227 0 0.0507 0 1.57 0</pose>
         </include>
         <joint name="CameraJointD455" type="fixed">
             <parent>base_link</parent>
