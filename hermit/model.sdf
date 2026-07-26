@@ -426,16 +426,20 @@
             <motorType>velocity</motorType>
         </plugin>
 
-        <!-- D455 montada na frente do drone. Os sensores camera do Gazebo
-             observam no eixo +X; rotacao nula mantem RGB e depth para frente. -->
+        <!--
+          D455 montada na frente do drone. No Gazebo Garden, manter a
+          compensacao entre o frame mecanico (+90 deg) e os sensores opticos
+          (-90 deg no model.sdf da D455) preserva a orientacao validada em
+          runtime quando o modelo e incluido com merge.
+        -->
         <include merge="true">
             <uri>model://realsense_d455</uri>
-            <pose>0.129227 0 -0.0507 0 0 0</pose>
+            <pose>0.129227 0 0.0507 0 1.5707963267948966 0</pose>
         </include>
         <joint name="CameraJointD455" type="fixed">
             <parent>base_link</parent>
             <child>realsense_d455/base</child>
-            <pose relative_to="base_link">0.129227 0 -0.0507 0 0 0</pose>
+            <pose relative_to="base_link">0.129227 0 0.0507 0 1.5707963267948966 0</pose>
         </joint>
 
         <!-- ===================== LiDAR 2D tipo RPLIDAR A2 ===================== -->

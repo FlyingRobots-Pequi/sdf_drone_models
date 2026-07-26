@@ -35,14 +35,16 @@
       
       <!-- Câmera colorida (RGB) -->
       <sensor name="color_camera_sensor" type="camera">
-        <pose>0 0.0475 0 0 0 0</pose>
+        <!-- Compensa o frame mecanico da montagem no Hermit. -->
+        <pose>0 0 0 0 -1.5707963267948966 0</pose>
         <!-- Ativada sob demanda pela bridge lazy. -->
         <always_on>0</always_on>
         <update_rate>30</update_rate>
         <!-- Publicar no tópico /camera/color/image_raw -->
         <topic>/camera/color/image_raw</topic>
         <camera>
-          <horizontal_fov>1.39626</horizontal_fov>
+          <!-- FOV horizontal do perfil de profundidade da D455: 87 graus. -->
+          <horizontal_fov>1.518</horizontal_fov>
           <image>
             <!-- Perfil D455 de menor custo: 56% menos pixels que 1280x720. -->
             <width>848</width>
@@ -51,20 +53,40 @@
           </image>
           <clip>
             <near>0.1</near>
-            <far>10.0</far>
+            <far>100.0</far>
           </clip>
+          <lens>
+            <type>gnomonical</type>
+            <scale_to_hfov>true</scale_to_hfov>
+            <intrinsics>
+              <fx>446.99809238325287</fx>
+              <fy>446.99809238325287</fy>
+              <cx>424.0</cx>
+              <cy>240.0</cy>
+              <s>0.0</s>
+            </intrinsics>
+            <projection>
+              <p_fx>446.99809238325287</p_fx>
+              <p_fy>446.99809238325287</p_fy>
+              <p_cx>424.0</p_cx>
+              <p_cy>240.0</p_cy>
+              <tx>0.0</tx>
+              <ty>0.0</ty>
+            </projection>
+          </lens>
         </camera>
       </sensor>
       
       <!-- Câmera de profundidade (float32) -->
       <sensor name="depth_camera_sensor" type="depth_camera">
-        <pose>0 0.010 0 0 0 0</pose>
+        <!-- Mesma pose/FOV/intrinsecos do RGB: profundidade registrada. -->
+        <pose>0 0 0 0 -1.5707963267948966 0</pose>
         <!-- Ativada sob demanda pela bridge lazy. -->
         <always_on>0</always_on>
         <update_rate>30</update_rate>
         <topic>/camera/depth/image_rect_raw</topic>
         <camera>
-          <horizontal_fov>1.39626</horizontal_fov>
+          <horizontal_fov>1.518</horizontal_fov>
           <image>
             <!-- Perfil nativo D455 848x480, alinhado ao RGB. -->
             <width>848</width>
@@ -72,28 +94,29 @@
             <format>R_FLOAT32</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>10.0</far>
+            <!-- Faixa simulada da D455; sem retorno continua sendo Inf. -->
+            <near>0.4</near>
+            <far>20.0</far>
           </clip>
           <!--
             O DepthCamera do Gazebo Garden usa os defaults 320x240 do
             SDFormat (fx=fy=277, cx=160, cy=120) no CameraInfo quando a lente
             nao declara intrinsecos. Estes valores correspondem ao perfil
-            848x480 e ao horizontal_fov de 80 graus definido acima.
+            848x480 e ao horizontal_fov de 87 graus definido acima.
           -->
           <lens>
             <type>gnomonical</type>
             <scale_to_hfov>true</scale_to_hfov>
             <intrinsics>
-              <fx>505.3052686175046</fx>
-              <fy>505.3052686175046</fy>
+              <fx>446.99809238325287</fx>
+              <fy>446.99809238325287</fy>
               <cx>424.0</cx>
               <cy>240.0</cy>
               <s>0.0</s>
             </intrinsics>
             <projection>
-              <p_fx>505.3052686175046</p_fx>
-              <p_fy>505.3052686175046</p_fy>
+              <p_fx>446.99809238325287</p_fx>
+              <p_fy>446.99809238325287</p_fy>
               <p_cx>424.0</p_cx>
               <p_cy>240.0</p_cy>
               <tx>0.0</tx>
